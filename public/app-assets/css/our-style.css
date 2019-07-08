@@ -1,0 +1,46 @@
+.wrapper
+    .app-sidebar:not(:hover)[data-background-color="white"]
+    .navigation
+    li.active
+    a,
+.wrapper
+    .off-canvas-sidebar:not(:hover)[data-background-color="white"]
+    .navigation
+    li.active
+    a {
+    background: rgba(200, 200, 200, 0.2);
+    color: #777 !important;
+}
+
+.wrapper
+    .app-sidebar:not(:hover)[data-background-color="white"]
+    .navigation
+    li.active
+    i,
+.wrapper
+    .off-canvas-sidebar:not(:hover)[data-background-color="white"]
+    .navigation
+    li.active
+    i {
+    color: #777 !important;
+}
+
+.app-sidebar[data-background-color="white"] .navigation li.active i,
+.off-canvas-sidebar[data-background-color="white"] .navigation li.active i {
+    color: #000 !important;
+}
+
+.app-sidebar[data-background-color="white"] .navigation li.active a,
+.off-canvas-sidebar[data-background-color="white"] .navigation li.active a {
+    background: rgba(200, 200, 200, 0.2);
+    color: #000 !important;
+}
+
+.page-link {
+    color: #1e9ff2;
+}
+
+.page-item.active .page-link {
+    background-color: #1e9ff2;
+    border-color: #1e9ff2;
+}

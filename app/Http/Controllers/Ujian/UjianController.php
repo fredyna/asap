@@ -8,6 +8,7 @@ use App\Ujian;
 use App\KategoriUjian;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Log;
 
 class UjianController extends Controller
 {
@@ -37,14 +38,36 @@ class UjianController extends Controller
         ];
 
         if (!empty($request->id)) {
+            $data_log = [
+                'user_id' => $request->user()->id,
+                'name'  => 'Edit Ujian',
+            ];
+
             $ujian = Ujian::find($request->id);
-            $ujian->update($data) ?
-                Alert::success('Success', 'Save Data Success') : Alert::error('Failed', 'Save Data Failed');
+            if ($ujian->update($data)) {
+                $data_log['description'] = 'Berhasil mengedit data ujian dengan id ' . $ujian->id;
+                Alert::success('Success', 'Save Data Success');
+            } else {
+                $data_log['description'] = 'Gagal mengedit data ujian dengan id ' . $ujian->id;
+                Alert::error('Failed', 'Save Data Failed');
+            }
         } else {
-            Ujian::create($data) ?
-                Alert::success('Success', 'Save Data Success') : Alert::error('Failed', 'Save Data Failed');
+            $data_log = [
+                'user_id' => $request->user()->id,
+                'name'  => 'Tambah Ujian',
+            ];
+
+            $ujian = Ujian::create($data);
+            if ($ujian) {
+                $data_log['description'] = 'Berhasil menambah data ujian';
+                Alert::success('Success', 'Save Data Success');
+            } else {
+                $data_log['description'] = 'Gagal menambah data ujian';
+                Alert::error('Failed', 'Save Data Failed');
+            }
         }
 
+        Log::create($data_log);
         return redirect()->route('ujian.index');
     }
 
@@ -68,12 +91,23 @@ class UjianController extends Controller
         return view('ujian.ujian.edit')->with($data);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $ujian = Ujian::find($id);
-        $ujian->delete() ?
-            Alert::success('Success', 'Delete Data Success') : Alert::error('Failed', 'Delete Data Failed');
+        $data_log = [
+            'user_id' => $request->user()->id,
+            'name'  => 'Hapus Ujian',
+        ];
 
+        $ujian = Ujian::find($id);
+        if ($ujian->delete()) {
+            $data_log['description'] = 'Berhasil menghapus data ujian';
+            Alert::success('Success', 'Delete Data Success');
+        } else {
+            $data_log['description'] = 'Gagal menghapus data ujian';
+            Alert::error('Failed', 'Delete Data Failed');
+        }
+
+        Log::create($data_log);
         return redirect()->back();
     }
 }

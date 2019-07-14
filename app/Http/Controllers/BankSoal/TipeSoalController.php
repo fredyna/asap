@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Tipesoal;
 use Alert;
+use App\Log;
 
 class TipeSoalController extends Controller
 {
@@ -31,9 +32,21 @@ class TipeSoalController extends Controller
             'deskripsi' => $request->deskripsi
         ];
 
-        Tipesoal::create($data) ?
-            Alert::success('Success', 'Save Data Success') : Alert::error('Failed', 'Save Data Failed');
+        $data_log = [
+            'user_id' => $request->user()->id,
+            'name'  => 'Tambah Tipe Soal',
+        ];
 
+        $tipeSoal = Tipesoal::create($data);
+        if ($tipeSoal) {
+            $data_log['description'] = 'Berhasil menambah data tipe soal';
+            Alert::success('Success', 'Save Data Success');
+        } else {
+            $data_log['description'] = 'Gagal menambah data tipe soal';
+            Alert::error('Failed', 'Save Data Failed');
+        }
+
+        Log::create($data_log);
         return redirect()->back();
     }
 
@@ -54,20 +67,42 @@ class TipeSoalController extends Controller
             'deskripsi' => $request->deskripsi
         ];
 
+        $data_log = [
+            'user_id' => $request->user()->id,
+            'name'  => 'Edit Tipe Soal',
+        ];
+
         $tipe = Tipesoal::find($id);
+        if ($tipe->update($data)) {
+            $data_log['description'] = 'Berhasil mengedit data tipe soal dengan id ' . $tipe->id;
+            Alert::success('Success', 'Save Data Success');
+        } else {
+            $data_log['description'] = 'Gagal mengedit data tipe soal dengan id ' . $tipe->id;
+            Alert::error('Failed', 'Save Data Failed');
+        }
 
-        $tipe->update($data) ?
-            Alert::success('Success', 'Save Data Success') : Alert::error('Failed', 'Save Data Failed');
-
+        Log::create($data_log);
         return redirect()->route('tipe-soal.index');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $tipe = Tipesoal::find($id);
-        $tipe->delete() ?
-            Alert::success('Success', 'Delete Data Success') : Alert::error('Failed', 'Delete Data Failed');
 
+        $data_log = [
+            'user_id' => $request->user()->id,
+            'name'  => 'Hapus Tipe Soal',
+        ];
+
+        if ($tipe->delete()) {
+            $data_log['description'] = 'Berhasil menghapus data tipe soal dengan id ' . $tipe->id;
+            Alert::success('Success', 'Delete Data Success');
+        } else {
+            $data_log['description'] = 'Gagal menghapus data tipe soal dengan id ' . $tipe->id;
+            Alert::error('Failed', 'Delete Data Failed');
+        }
+
+        Log::create($data_log);
         return redirect()->back();
     }
 }

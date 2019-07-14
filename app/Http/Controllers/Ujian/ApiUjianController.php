@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Ujian;
 use App\Transformers\UjianTransformer;
+use App\Log;
 
 class ApiUjianController extends Controller
 {
@@ -54,17 +55,24 @@ class ApiUjianController extends Controller
         return response()->json($ujian);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $data_log = [
+            'user_id' => $request->user()->id,
+            'name'  => 'Hapus Ujian',
+        ];
+
         $ujian = Ujian::findOrFail($id);
         $output = null;
         if ($ujian->delete()) {
+            $data_log['description'] = 'Berhasil menghapus data ujian dengan id ' . $ujian->id;
             $output = [
                 'status' => true,
                 'errorcode' => 0,
                 'message' => 'success'
             ];
         } else {
+            $data_log['description'] = 'Gagal menghapus data ujian dengan id ' . $ujian->id;
             $output = [
                 'status' => false,
                 'errorcode' => 1,
@@ -72,6 +80,7 @@ class ApiUjianController extends Controller
             ];
         }
 
+        Log::create($data_log);
         return response()->json($output, 200);
     }
 }

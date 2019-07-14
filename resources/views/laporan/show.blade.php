@@ -23,33 +23,35 @@
                                 <table id="table-ujian" class="table table-responsive-md">
                                     <tr>
                                         <th>Nama Ujian</th>
-                                        <td>Soal Dasar Pemrograman Web Statis</td>
+                                        <td>{{ $laporan->ujian->nama }}</td>
                                     </tr>
                                     <tr>
                                         <th>Kategori Ujian</th>
-                                        <td>Pemrograman Web</td>
+                                        <td>{{ $laporan->ujian->kategori->nama }}</td>
                                     </tr>
                                     <tr>
                                         <th>Peserta</th>
-                                        <td>Fredy Nur Apriyanto</td>
+                                        <td>{{ $laporan->user->name }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Progress</th>
-                                        <td>Completed</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Jawaban Benar</th>
-                                        <td>17</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Jawaban Salah</th>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Tidak Dijawab</th>
-                                        <td>1</td>
+                                        <th>Waktu</th>
+                                        <td>{{ $laporan->created_at->diffForHumans() }}</td>
                                     </tr>
                                 </table>
+                                <div class="row">
+                                    <div class="col-md-4 text-center">
+                                        <h5>Jawaban Benar</h5>
+                                        <h4 class="text-success">{{ $laporan->jawaban_benar }}</h4>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <h5>Jawaban Salah</h5>
+                                        <h4 class="text-danger">{{ $laporan->jawaban_salah }}</h4>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <h5>Tidak Dijawab</h5>
+                                        <h4 class="text-muted">{{ $laporan->jawaban_kosong }}</h4>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

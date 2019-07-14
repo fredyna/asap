@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Validator;
 use App\Soal;
 use App\Transformers\SoalTransformer;
+use App\Log;
 
 class ApiSoalController extends Controller
 {
@@ -115,22 +116,38 @@ class ApiSoalController extends Controller
         ];
 
         if (!empty($request->id)) {
+            $data_log = [
+                'user_id' => $request->user()->id,
+                'name'  => 'Tambah Soal',
+            ];
+
             $soal = Soal::find($request->id);
             if ($soal->update($data)) {
+                $data_log['description'] = 'Berhasil mengedit data soal dengan id ' . $soal->id;
                 $output = [
                     'status' => true,
                     'errorcode' => 0,
                     'message' => 'Berhasil update data!'
                 ];
+
+                Log::create($data_log);
                 return response()->json($output, 200);
             }
         } else {
+            $data_log = [
+                'user_id' => $request->user()->id,
+                'name'  => 'Tambah Soal',
+            ];
+
             if (Soal::create($data)) {
+                $data_log['description'] = 'Berhasil menambah data soal';
                 $output = [
                     'status' => true,
                     'errorcode' => 0,
                     'message' => 'Berhasil tambah data!'
                 ];
+
+                Log::create($data_log);
                 return response()->json($output, 200);
             }
         }
@@ -141,20 +158,34 @@ class ApiSoalController extends Controller
             'message' => 'Gagal menyimpan data!'
         ];
 
+        $data_log = [
+            'user_id' => $request->user()->id,
+            'name'  => 'Tambah/Edit Soal',
+            'description' => 'Gagal menambah/mengedit data soal'
+        ];
+
+        Log::create($data_log);
         return response()->json($output, 400);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $data_log = [
+            'user_id' => $request->user()->id,
+            'name'  => 'Hapus Soal',
+        ];
+
         $soal = Soal::findOrFail($id);
         $output = null;
         if ($soal->delete()) {
+            $data_log['description'] = 'Berhasil menghapus data soal dengan id ' . $soal->id;
             $output = [
                 'status' => true,
                 'errorcode' => 0,
                 'message' => 'success'
             ];
         } else {
+            $data['description'] = 'Gagal menghapus data soal dengan id ' . $soal->id;
             $output = [
                 'status' => false,
                 'errorcode' => 1,
@@ -162,6 +193,7 @@ class ApiSoalController extends Controller
             ];
         }
 
+        Log::create($data_log);
         return response()->json($output, 200);
     }
 }

@@ -279,7 +279,6 @@ export default {
         try {
           let response = await axios.post(simpanSoal, postData);
           swal.fire("Sukses!", "Simpan data berhasil", "success");
-          this.reset();
           window.location = "/admin/soal/soal";
         } catch (e) {
           swal.fire("Gagal!", e.response.data.message, "error");
@@ -287,14 +286,15 @@ export default {
       }
     },
     reset() {
-      this.soal.tipe_id = "";
-      this.soal.kategori_id = "";
+      this.soal.id = "";
+      this.soal.kategori_soal_id = "";
       this.soal.soal = "";
       this.soal.jawaban_1 = "";
       this.soal.jawaban_2 = "";
       this.soal.jawaban_3 = "";
       this.soal.jawaban_4 = "";
       this.soal.jawaban_benar = "";
+      this.pilihan_jawaban = "";
       this.$refs.file.type = "text";
       this.$refs.file.type = "file";
     },

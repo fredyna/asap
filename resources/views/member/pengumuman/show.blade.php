@@ -9,43 +9,53 @@
 
         <div class="container-fluid"><!--Statistics cards Starts-->
             <div class="row">
-                <div class="col-sm-8 offset-sm-2">
+                <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title-wrap bar-info">
-                                <h4 class="card-title">Detail Pengumuman</h4>
+                                <h4 class="card-title">Detail Ujian</h4>
                             </div>
                         </div>
 
                         <div class="card-body">
-                            <div class="card-block">
-
-                                <table id="table-ujian" class="table table-responsive-md">
+                            <div class="card-block table-responsive">
+                                <table style="width: 100%;">
                                     <tr>
-                                        <th>Nama Ujian</th>
-                                        <td>Soal Dasar Pemrograman Web Statis</td>
+                                        <th style="width: 35%;">Nama Ujian</th>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="width: 60%;">{{ $pengumuman->ujian->nama }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Kategori Ujian</th>
-                                        <td>Pemrograman Web</td>
+                                        <th style="width: 35%;">Kategori Ujian</th>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="width: 60%;">{{ $pengumuman->ujian->kategori->nama }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Progress</th>
-                                        <td>Completed</td>
+                                        <th style="width: 35%;">Jumlah Soal</th>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="width: 60%;">{{ $pengumuman->ujian->soals()->count() }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Jawaban Benar</th>
-                                        <td>17</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Jawaban Salah</th>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Tidak Dijawab</th>
-                                        <td>1</td>
+                                        <th style="width: 35%;">Waktu</th>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="width: 60%;">{{ $pengumuman->created_at->diffForHumans() }}</td>
                                     </tr>
                                 </table>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4 text-center">
+                                    <h4>Jawaban Benar</h4>
+                                    <h2 class="text-success">{{ $pengumuman->jawaban_benar }}</h2>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <h4>Jawaban Salah</h4>
+                                    <h2 class="text-danger">{{ $pengumuman->jawaban_salah }}</h2>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <h4>Tidak Dijawab</h4>
+                                    <h2 class="text-muted">{{ $pengumuman->jawaban_kosong }}</h2>
+                                </div>
                             </div>
                         </div>
                     </div>

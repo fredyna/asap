@@ -70,7 +70,7 @@
                                             @endforeach
                                         @else
                                         <tr>
-                                            <td colspan="5" class="text-center"><i>Tidak ada data</i></td>
+                                            <td colspan="6" class="text-center"><i>Tidak ada data</i></td>
                                         </tr>
                                         @endif
                                     </tbody>

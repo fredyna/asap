@@ -105,7 +105,7 @@
                           </template>
                           <template v-else>
                             <tr>
-                              <td colspan="5">
+                              <td colspan="5" class="text-center">
                                 <i>Tidak ada data</i>
                               </td>
                             </tr>

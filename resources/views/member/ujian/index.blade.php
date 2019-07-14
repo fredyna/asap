@@ -35,76 +35,34 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th style="text-align: left">Nama Ujian</th>
-                                            <th style="text-align: left">Kategori</th>
+                                            <th>Nama Ujian</th>
+                                            <th>Kategori</th>
                                             <th>Jumlah Soal</th>
+                                            <th>Jumlah Percobaan</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Soal Dasar Pemrograman Web Statis</td>
-                                            <td>Pemrograman Web</td>
-                                            <td>50</td>
-                                            <td>
-                                                <button class="btn btn-info btn-sm">Enrolled</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Soal Dasar Pemrograman Web Dinamis</td>
-                                            <td>Pemrograman Web</td>
-                                            <td>50</td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm">Enroll</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Soal Dasar Pemrograman Web Responsive</td>
-                                            <td>Pemrograman Web</td>
-                                            <td>50</td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm">Enroll</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Soal Dasar Pemrograman OOP PHP</td>
-                                            <td>Pemrograman Web</td>
-                                            <td>50</td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm">Enroll</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Soal Dasar Pemrograman PHP & MySQL</td>
-                                            <td>Pemrograman Web</td>
-                                            <td>50</td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm">Enroll</button>
-                                            </td>
-                                        </tr>
+                                        @php
+                                            $no = 1;
+                                        @endphp
+                                        @if (!empty($data) && count($data))
+                                            @foreach ($data as $ujian)
+                                                <tr>
+                                                    <td>{{ $no++ }}</td>
+                                                    <td>{{ $ujian['nama'] }}</td>
+                                                    <td>{{ $ujian['kategori_ujian'] }}</td>
+                                                    <td class="text-center">{{ $ujian['jumlah_soal'] }}</td>
+                                                    <td class="text-center">{{ $ujian['jumlah_coba'] }}</td>
+                                                    <td>
+                                                        <a href="{{ route('member.ujian.enroll', $ujian['id']) }}" class="btn btn-success btn-sm">Pilih</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
-                                <nav aria-label="...">
-                                    <ul class="pagination">
-                                        <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                        </li>
-                                        <li class="page-item active" aria-current="page">
-                                            <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
 
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                        <a class="page-link" href="#">Next</a>
-                                        </li>
-                                    </ul>
-                                </nav>
                             </div>
                         </div>
                     </div>

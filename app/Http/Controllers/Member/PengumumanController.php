@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Member;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\UjianUser;
+use App\User;
 
 class PengumumanController extends Controller
 {
@@ -12,9 +14,10 @@ class PengumumanController extends Controller
         $this->middleware(['auth']);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('member.pengumuman.index');
+        $data['pengumumans'] = User::find($request->user()->id)->ujians()->latest()->paginate(10);
+        return view('member.pengumuman.index')->with($data);
     }
 
     public function create()
@@ -29,7 +32,8 @@ class PengumumanController extends Controller
 
     public function show($id)
     {
-        return view('member.pengumuman.show');
+        $data['pengumuman'] = UjianUser::find($id);
+        return view('member.pengumuman.show')->with($data);
     }
 
     public function edit($id)

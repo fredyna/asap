@@ -10,7 +10,7 @@
                     <!--Statistics cards Starts-->
                     <section id="extended">
                         <div class="row">
-                            <div class="col-sm-5">
+                            {{-- <div class="col-sm-5">
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-title-wrap bar-info">
@@ -53,9 +53,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="col-sm-7">
+                            <div class="col-sm-8 offset-sm-2">
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-title-wrap bar-info">

@@ -24,4 +24,9 @@ class Ujian extends Model
     {
         return $this->belongsToMany(Soal::class, 'soal_ujian', 'ujian_id', 'soal_id')->withTimestamps();
     }
+
+    public function ujianUsers()
+    {
+        return $this->hasMany(UjianUser::class);
+    }
 }

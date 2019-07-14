@@ -44,7 +44,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
 Route::group(['prefix' => 'member', 'middleware' => ['auth', 'verified']], function () {
     Route::get('/', 'Member\ListUjianController@index')->name('member.index');
     Route::get('/ujian/contoh', 'Member\UjianController@index');
+    Route::get('/ujian/enroll/{ujian}', 'Member\UjianController@enroll')->name('member.ujian.enroll');
+    Route::get('/ujian/start/{ujian}', 'Member\UjianController@enrollUjian')->name('member.ujian.start');;
     Route::resource('/pengumuman', 'Member\PengumumanController');
+    Route::get('/ujian/{id}', 'Member\UjianRunController@index')->name('member.ujian');
+    Route::get('/ujian/save/{id}', 'Member\UjianRunController@save')->name('member.ujian.save');
 });
 
 Route::group(['prefix' => 'banksoal', 'middleware' => ['auth', 'admin']], function () {

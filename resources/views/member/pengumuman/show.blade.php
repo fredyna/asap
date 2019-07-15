@@ -38,7 +38,7 @@
                                     <tr>
                                         <th style="width: 35%;">Waktu</th>
                                         <td style="width: 5%;">:</td>
-                                        <td style="width: 60%;">{{ $pengumuman->created_at->diffForHumans() }}</td>
+                                        <td style="width: 60%;">{{ $pengumuman->updated_at->diffForHumans() }}</td>
                                     </tr>
                                 </table>
                             </div>

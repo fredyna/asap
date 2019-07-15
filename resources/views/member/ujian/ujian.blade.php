@@ -109,7 +109,7 @@
                         <a href="javascript:void(0)" onclick="previous()" class="btn btn-info btn-sm"><i class="fa fa-arrow-left"></i> Previous</a>
                     @endif
 
-                    @if ($ujians->currentPage() <= 1 && $ujians->currentPage() < $ujians->total())
+                    @if ($ujians->currentPage() < $ujians->total())
                         <a href="javascript:void(0)" onclick="next()" class="btn btn-info btn-sm">Next <i class="fa fa-arrow-right"></i></a>
                     @endif
                     <button onclick="save()" class="btn btn-success btn-sm float-right">End Test</button>
@@ -124,8 +124,13 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            let detik = "{{ 60 - $seconds }}";
             let menit = "{{ 10 - $minute }}";
+            detik = "{{ 60 - $seconds }}";
+            if(menit >= 9 && detik >= 59){
+                detik = 0;
+                menit = 10;
+            }
+
             let myTime;
 
             function waktuMundur() {
@@ -142,9 +147,16 @@
                 }
 
                 if(menit == 0 && detik == 0){
-                    alert('hai');
                     $('#waktu-mundur').text('00:00:00');
                     clearTimeout(myTime);
+
+                    let id_ujian = $("#id_ujian").val();
+                    let jawaban = $('input[name=jawaban]:checked').val();
+                    if(!jawaban)
+                        jawaban = '';
+                    let url = "{{ route('member.ujian.save', $ujian_now->id) }}" + "?jawaban=" + jawaban + "&id_ujian=" + id_ujian;
+
+                    location.href = url;
                 }
             }
             if(menit >= 0){

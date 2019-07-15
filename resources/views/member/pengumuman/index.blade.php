@@ -53,7 +53,7 @@
                                                     <td>{{ $pengumuman->ujian->kategori->nama }}</td>
                                                     <td class="text-center">
                                                         {{
-                                                            $pengumuman->created_at->diffForHumans()
+                                                            $pengumuman->updated_at->diffForHumans()
                                                         }}
                                                     </td>
                                                     <td>
